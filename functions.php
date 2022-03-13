@@ -1,0 +1,42 @@
+<?php
+function pdo_connect_mysql() {
+    // Update the details below with your MySQL details
+    $DATABASE_HOST = 'localhost';
+    $DATABASE_USER = 'root';
+    $DATABASE_PASS = '';
+    $DATABASE_NAME = 'test';
+    try {
+    	return new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
+    } catch (PDOException $exception) {
+    	// If there is an error with the connection, stop the script and display the error.
+    	exit('Failed to connect to database!');
+    }
+}
+
+function clean($userInput) {
+    $userInput = trim($userInput);
+    $userInput = stripslashes($userInput);
+    $userInput = htmlspecialchars($userInput);
+    return $userInput;
+}
+
+//returns the total amount of columns in the table
+function getRowAmount($tableName){
+    $db = pdo_connect_mysql();
+    $query = "select COUNT(*) from " .$tableName;
+    $stmt = $db->query($query);
+    return $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+}
+
+
+// returns the amount of attendees at a given event id
+// NOTE - $tablename should always be the name of the linking table between events and custumers.
+// TO CHANGE - once table names are known $tablename can be removed
+function getAttendeesAmount($tableName, $eventId){
+    $db = pdo_connect_mysql();
+    $query = "select COUNT(id) from". $tableName ."where id =". $eventid;
+    $stmt = $db->query($query);
+    return $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(id)"];
+}
+?>
+
