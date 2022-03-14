@@ -2,9 +2,9 @@
 function pdo_connect_mysql() {
     // Update the details below with your MySQL details
     $DATABASE_HOST = 'localhost';
-    $DATABASE_USER = 'root';
-    $DATABASE_PASS = '';
-    $DATABASE_NAME = 'test';
+    $DATABASE_USER = 'admin';
+    $DATABASE_PASS = 'j159540!';
+    $DATABASE_NAME = 'holyhope';
     try {
     	return new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
     } catch (PDOException $exception) {
@@ -45,12 +45,12 @@ function getHashValue($toHash){
 
 function loginAutentication($givenUsername, $givenPassword){
     $db = pdo_connect_mysql();
-    $query = 'select exists(SELECT * from logins where username = ?) as "exists"';
+    $query = 'select exists(SELECT * from authenticated_users where username = ?) as "exists"';
     $stmt = $db->prepare($query);
     $stmt->execute([$givenUsername]);
     $returnedValue = $stmt->fetch(PDO::FETCH_ASSOC)["exists"];
     if ($returnedValue == "1"){
-        $query = "select password from logins where username = ?";
+        $query = "select password from authenticated_users where username = ?";
         $stmt = $db->prepare($query);
         $stmt->execute([$givenUsername]);
         $returnedValue = $stmt->fetch(PDO::FETCH_ASSOC)["password"];
