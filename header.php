@@ -16,7 +16,9 @@
 <nav class="navtop">
       <div>
         <h1>HolyHope </h1>
-            <a href="readevent.php"><i class="fa fa-product-hunt"></i>Events</a>
-            <a href="logout.php"><i class="fa fa-sign-out"></i>Log out</a>
+        <a href="readevent.php"><i class="fa fa-paint-brush"></i>Events</a>
+        <a href="readproducts.php"><i class="fa fa-product-hunt"></i>Products</a>
+        <a href="kpiPage.php"><i class="far fa-lightbulb"></i>KPI</a>
+        <a href="logout.php"><i class="fa fa-sign-out"></i>Log out</a>
       </div>
       </nav>
