@@ -10,10 +10,10 @@ if(!isset($_SESSION['username']))
 $pdo = pdo_connect_mysql();
 $msg = '';
 // Check that the product ID exists
-if (isset($_GET['id'])) {
+if (isset($_GET['event_id'])) {
     // Select the record that is going to be deleted
     $stmt = $pdo->prepare('SELECT * FROM events WHERE id = ?');
-    $stmt->execute([$_GET['id']]);
+    $stmt->execute([$_GET['event_id']]);
     $event = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$event) {
         exit('Product doesn\'t exist with that ID!');
@@ -26,9 +26,9 @@ if (isset($_GET['id'])) {
 <?php include 'header.php'; ?>
         <div class="contact-section">
             <h2>View Event #<?=$event['id']?></h2> 
-            <button type="button" class="btn btn-primary fa fa-edit" onclick="document.location='editevent.php?id=<?=$event['id']?>'">Update</button>
-            <button type="button" class="btn btn-danger fa fa-remove" onclick="document.location='deleteevent.php?id=<?=$event['id']?>'">Delete</button>
-            <form action="editevent.php?id=<?=$event['id']?>" method="post">
+            <button type="button" class="btn btn-primary fa fa-edit" onclick="document.location='editevent.php?id=<?=$event['event_id']?>'">Update</button>
+            <button type="button" class="btn btn-danger fa fa-remove" onclick="document.location='deleteevent.php?id=<?=$event['event_id']?>'">Delete</button>
+            <form action="editevent.php?id=<?=$event['event_id']?>" method="post">
                     <label for="Eventid">Event id</label>
                     <input type="number" name="id" id="id"class="contact-form-text" placeholder="Event id" value="<?=$event['id']?>" required>
                     <label for="name">Event Name</label>
