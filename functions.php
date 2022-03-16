@@ -13,6 +13,54 @@ function pdo_connect_mysql() {
     }
 }
 
+function curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url){
+    if ($image_url = ""){
+        $ending = $productId + "/" + $name + "/" + $max_attendee + "/" + $description + "/" + $price;
+    } else{
+        $ending = $productId + "/" + $name + "/" + $max_attendee + "/" + $description + "/" + $price + "/" + $image_url;
+    }
+    $url_start = "https://holyhope.co.uk/_functions-dev/" + $function + '/secretphrase/';
+    $url = $url_start + $ending;
+
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    $headers = array(
+    "Content-Length: 0",
+    );
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    //for debug only!
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+    $resp = curl_exec($curl);
+    curl_close($curl);
+    var_dump($resp);
+    }
+
+function add_event($productId, $name, $description, $max_attendee, $price, $image_url = ""){
+    $function = "add_event";
+
+    curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
+
+
+}
+
+function updateEvent($productId, $name, $description, $max_attendee, $price, $image_url = ""){
+    $function = "updateEvent";
+
+    curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
+
+
+}
+
+
+
+
+
+
 function clean($userInput) {
     $userInput = trim($userInput);
     $userInput = stripslashes($userInput);
